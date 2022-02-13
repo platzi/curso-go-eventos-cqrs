@@ -15,3 +15,16 @@ services:
     image: "docker.elastic.co/elasticsearch/elasticsearch:6.2.3"
     environment:
       - "discover.type=single-node"
+  feed:
+    build: "."
+    command: "feed-service"
+    depends_on:
+      - "postgres"
+      - "nats"
+    ports:
+      - "8080"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      NATS_ADDRESS: "nats:4222"
