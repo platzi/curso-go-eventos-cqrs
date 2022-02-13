@@ -50,7 +50,7 @@ func (r *ElasticSearchRepository) SearchFeed(ctx context.Context, query string) 
 			"multi_match": map[string]interface{}{
 				"query":            query,
 				"fields":           []string{"title", "description"},
-				"fuzzines":         3,
+				"fuzziness":        3,
 				"cutoff_frequency": 0.0001,
 			},
 		},
@@ -65,7 +65,6 @@ func (r *ElasticSearchRepository) SearchFeed(ctx context.Context, query string) 
 		r.client.Search.WithBody(&buf),
 		r.client.Search.WithTrackTotalHits(true),
 	)
-	defer res.Body.Close()
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +79,7 @@ func (r *ElasticSearchRepository) SearchFeed(ctx context.Context, query string) 
 	}
 
 	var eRes map[string]interface{}
-	if err := json.NewDecoder(res.Body).Decode(&r); err != nil {
+	if err := json.NewDecoder(res.Body).Decode(&eRes); err != nil {
 		return nil, err
 	}
 	var feeds []models.Feed

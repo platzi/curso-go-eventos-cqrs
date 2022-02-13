@@ -26,7 +26,7 @@ func (repo *PostgresRepository) Close() {
 }
 
 func (repo *PostgresRepository) InsertFeed(ctx context.Context, feed *models.Feed) error {
-	_, err := repo.db.ExecContext(ctx, "INSERT INTO feeds (id, title, description, created_at) VALUES ($1, $2, $3)", feed.ID, feed.Title, feed.Description)
+	_, err := repo.db.ExecContext(ctx, "INSERT INTO feeds (id, title, description) VALUES ($1, $2, $3)", feed.ID, feed.Title, feed.Description)
 	return err
 }
 

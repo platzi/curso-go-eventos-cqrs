@@ -27,7 +27,7 @@ func newRouter() (router *mux.Router) {
 
 func main() {
 	var cfg Config
-	err := envconfig.Process("", cfg)
+	err := envconfig.Process("", &cfg)
 	if err != nil {
 		log.Fatal(err)
 	}
