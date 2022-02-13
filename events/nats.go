@@ -66,7 +66,7 @@ func (n *NatsEventStore) decodeMessage(data []byte, m interface{}) error {
 	return gob.NewDecoder(&b).Decode(m)
 }
 
-func (n *NatsEventStore) OnCreatedFeed(ctx context.Context, f func(CreatedFeedMessage)) (err error) {
+func (n *NatsEventStore) OnCreatedFeed(f func(CreatedFeedMessage)) (err error) {
 	msg := CreatedFeedMessage{}
 	n.feedCreatedSub, err = n.conn.Subscribe(msg.Type(), func(m *nats.Msg) {
 		n.decodeMessage(m.Data, &msg)

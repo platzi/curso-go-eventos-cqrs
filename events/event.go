@@ -10,7 +10,7 @@ type EventStore interface {
 	Close()
 	PublishCreatedFeed(ctx context.Context, feed *models.Feed) error
 	SubscribeCreatedFeed(ctx context.Context) (<-chan CreatedFeedMessage, error)
-	OnCreatedFeed(ctx context.Context, f func(CreatedFeedMessage)) error
+	OnCreatedFeed(f func(CreatedFeedMessage)) error
 }
 
 var eventStore EventStore
@@ -32,5 +32,5 @@ func SubscribeCreatedFeed(ctx context.Context) (<-chan CreatedFeedMessage, error
 }
 
 func OnCreatedFeed(ctx context.Context, f func(CreatedFeedMessage)) error {
-	return eventStore.OnCreatedFeed(ctx, f)
+	return eventStore.OnCreatedFeed(f)
 }
