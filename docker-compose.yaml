@@ -43,3 +43,12 @@ services:
         POSTGRES_DB: "postgres"
         NATS_ADDRESS: "nats:4222"
         ELASTICSEARCH_ADDRESS: "elasticsearch:9200"
+  pusher:
+    build: "."
+    command: "pusher-service"
+    depends_on:
+      - "nats"
+    ports:
+      - "8080"
+    environment:
+      NATS_ADDRESS: "nats:4222"
